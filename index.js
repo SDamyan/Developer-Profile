@@ -3,13 +3,14 @@ const axios = require("axios");
 const inquirer = require("inquirer");
 const pdf = require('html-pdf');
 const generateHTML = require ('./generateHTML');
+let responseOutput;
 
 const questions = [
   {
     type: 'input',
     name: 'colors',
-    message: "What is your favorite color (Green, Blue, Pink, or Red)?",
-    options: ["Green", "Blue", "Pink", "Red"]
+    message: "What is your favorite color (green, blue, pink, or red)?",
+    options: ["green", "blue", "pink", "red"]
   },
 
   {
@@ -30,7 +31,8 @@ async function queryURL(username) {
 }
 
 async function queryGithubProfileURL(username) {
-    const queryUrl = `https://github.com/${username}/`;
+    console.log(username);
+    const queryUrl = `https://api.github.com/users/${username}`;
     const response = await axios.get(queryUrl);
     return response.data;
 }
@@ -53,7 +55,23 @@ async function init() {
   // var response = await queryURL(answers.github);
   var data = await queryGithubProfileURL(answers.github);
   console.log (data);
-  const htmlTemplate = generateHTML(data);
+  responseOutput = {
+    color:answers.colors,
+    wrapperBackground: answers.colors,
+    avatar_url:data.avatar_url,
+    name:data.name,
+    company:data.company,
+    location:data.location,
+    html_url:data.html_url,
+    blog:data.blog,
+    bio:data.bio,
+    public_repos:data.public_repos,
+    followers:data.followers,
+    stars:data.stars,
+    following:data.following
+  }
+
+  const htmlTemplate = generateHTML(data, responseOutput);
   await writePdfFile(htmlTemplate);
 }
 
