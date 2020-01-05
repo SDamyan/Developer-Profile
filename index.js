@@ -37,6 +37,29 @@ async function queryGithubProfileURL(username) {
     return response.data;
 }
 
+// function getTotalStars(username) {
+//   return axios
+//   .get(`https://api.github.com/users/${username}/repos?client_id=${process.env.CLIENT_ID}&client_secret=${process.env.CLIENT_SECRET}&per_page=100`
+//   )
+//       .then(response => {
+              
+//       console.log(response.data)
+//           return response.data.reduce((acc, curr) => {
+//        acc += curr.stargazers_count;
+//   return acc;
+// }, 0);
+// });
+// }
+
+// getTotalStars(queryGithubProfileURL).then(stars => {
+//   return generateHTML({
+//     stars,
+//     color,
+//     ...response.data
+//   });
+// });
+
+
 function writeFile(data) {
     fs.writeFileSync('./response.txt', data);
 }
@@ -49,6 +72,7 @@ async function writePdfFile(html) {
   });
 }
   
+
 async function init() {
   var answers = await askQuestions();
   console.log(answers);
@@ -67,7 +91,7 @@ async function init() {
     bio:data.bio,
     public_repos:data.public_repos,
     followers:data.followers,
-    stars:data.stars,
+    starred_url:data.starred_url,
     following:data.following
   }
 

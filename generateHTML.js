@@ -205,7 +205,7 @@ function generateHTML(data, responseOutput) {
            <div class="container">
            <div class="row">
               <div class="col">
-                 <h3>${data.bio ? `${data.bio}` : ""}</h3>
+                 <h5>${data.bio ? `${data.bio}` : ""}</h5>
               </div>
               </div>
               <div class="row">
